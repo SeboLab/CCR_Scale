@@ -17,7 +17,7 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    description='Code for running CCR Scale Study 3',
+    description='Misty robot ROS2 package for CCR Scale Study 3',
     license='Apache-2.0',
     tests_require=['pytest'],
     entry_points={
