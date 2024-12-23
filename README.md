@@ -1,4 +1,4 @@
-# Rapport
+# CCR Scale Study 3
 
 If you have not previously used ROS2 and Misty, or do not have the necessary Python packages, see the prerequisites for software installation instructions.
 
