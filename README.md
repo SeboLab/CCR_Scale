@@ -8,7 +8,7 @@ If you have not previously used ROS2 and Misty, or do not have the necessary Pyt
 * **video laptop** refers to the laptop connected to a webcam and using Zoom and Cheese.
 
 ## Experiment Setup
-<img src="https://github.com/user-attachments/assets/4b83d4a9-19a2-42c9-8cd0-8eea91afb4e2" width="600">
+<img src="https://github.com/SeboLab/CCR_Scale/blob/1eba5b2ad4567e669233c10af126aed3be9b6ab0/Study3_Code/Study3Setup.png" width="600">
 
 ## Using the virtual machine
 
