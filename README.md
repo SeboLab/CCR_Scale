@@ -1,3 +1,34 @@
+# CCR Scale Data analysis
+
+## Study 1
+
+* nFactors.R
+  * Finds the number of factors
+* parallelAnalysis.R
+  * Finds the number of factors
+* factorAnalysis.R
+  * Runs exploratory factor analysis using the specified number of factors
+* cronbachAlpha.R
+* omega.R
+  * Calculates McDonald's omega
+
+## Study 2
+
+* CFA.R
+  * Runs confirmatory factor analysis
+  * If you are running it with different items in the factors, change the section called 'model'
+  * You will need to change the headings of the columns in the data you import to match the names used in the lists of items (they cannot have spaces) or change the names of the items in R to match the data.
+* CorrelationCoefficient.R
+* NagelkerkeRsquared.R
+* cronbachAlpha.R
+* omega.R
+  * Calculates McDonald's omega
+* ordinalRegression.R
+
+## Study 3
+
+* CorrelationCoefficient.R
+
 # CCR Scale Study 3
 
 If you have not previously used ROS2 and Misty, or do not have the necessary Python packages, see the prerequisites for software installation instructions.
