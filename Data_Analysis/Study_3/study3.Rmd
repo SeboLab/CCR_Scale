@@ -1,0 +1,892 @@
+---
+title: "Study 3 Data Analysis"
+author: ""
+date: "Updated 12/24/2024"
+output:
+  html_document:
+    number_sections: no
+    toc: yes
+    toc_depth: 2
+    toc_float:
+      collapsed: no
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
+theme: sandstone
+highlight: tango
+---
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+library(tidyverse)
+library(readr)
+library(readxl)
+library(rstatix)
+library(lubridate)
+library(ggplot2)
+library(ggpubr)
+library(gridExtra)
+library(ggExtra)
+library(tidyr)
+library(plyr)
+library(plotly)
+library(dplyr)
+library(psych)
+library(psycho)
+library(tidyboot)
+library(FactoMineR)
+library(factoextra)
+library(stringr)
+library(formattable)
+library(factoextra)
+library(usmap)
+library(alphaOutlier)
+library(Rmisc)
+library(mediation)
+library(lme4)
+library(lmerTest)
+library(emmeans)
+library(car)
+library(mediation)
+library(lsr)
+library(kableExtra)
+library(multcomp)
+library(irr)
+library(effsize)
+library(showtext) 
+library(ltm)
+library(ggpattern)
+
+#Put file path to Study3_data.csv below:
+df <- read.csv("~/CCR_Scale/Data_Analysis/Data/Study3_data.csv", header=T)
+
+#Create a factor for attitude
+df$condition <- factor(
+  df$condition,
+  levels = 1:2,
+  labels = c("Responsive", "Unresponsive")
+)
+
+#Put file path to Study3_qualitative_data.csv below:
+df_coding <- read.csv("~/CCR_Scale/Data_Analysis/Data/Study3_qualitative_data.csv", header=T)
+
+#Create a factor for attitude
+df_coding$condition <- factor(
+  df_coding$condition,
+  levels = 1:2,
+  labels = c("Responsive", "Unresponsive")
+)
+
+```
+
+## Connection-Coordination Rapport (CCR) Scale
+
+#### Connection-Coordination Rapport (CCR) Scale {.tabset}
+
+##### Plot
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+
+summarySE <- summarySE(df, measurevar="rapport_score", groupvars=c("condition"), na.rm = TRUE)
+plot <- ggplot(data=summarySE, aes(x=condition, y=rapport_score)) +
+geom_bar(position=position_dodge(), stat="identity", width=0.5) +
+geom_errorbar(aes(ymin=rapport_score-se, ymax=rapport_score+se),width=.2, position=position_dodge(.5)) +
+xlab("Condition") +
+ggtitle("Connection-Coordination Rapport (CCR) Scale") +
+theme_bw()+   
+coord_cartesian(ylim = c(1, 5))
+    
+plot
+
+```
+<br>
+
+**Mean and Standard deviation:**
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+# mean & stdev for all conditions
+
+means <- aggregate(
+df$rapport_score,
+df["condition"],
+function(x) mean(x, na.rm = TRUE)
+)
+
+sds <- aggregate(
+df$rapport_score,
+df["condition"],
+function(x) sd(x, na.rm = TRUE)
+)
+
+new.matrix <- cbind(as.data.frame(means[2]), as.data.frame(sds[2]))
+colnames(new.matrix) <- c("Mean", "Standard Deviation")
+rownames(new.matrix) <- c("Responsive", "Unresponsive")
+
+kbl(new.matrix, digits = 3, align = c("l", "c", "c", "c")) %>% kable_classic() %>%
+kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+
+```
+
+##### independent-sample t-test
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+# Perform independent-sample t-test
+t_test_result <- t.test(rapport_score ~ condition, data = df, var.equal = TRUE)
+
+# View the results
+print(t_test_result)
+
+
+```
+
+##### calculate Cohen’s d and 95% CI for Cohen’s d
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+# Calculate Cohen's d
+cohen_d <- cohen.d(rapport_score ~ condition, data = df, hedges.correction = TRUE)
+print(cohen_d)
+
+```
+
+## Connection Factor in CCR Scale
+
+#### Connection Factor in CCR Scale {.tabset}
+
+##### Plot
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+
+summarySE <- summarySE(df, measurevar="rapport_connection_factor_score", groupvars=c("condition"), na.rm = TRUE)
+plot <- ggplot(data=summarySE, aes(x=condition, y=rapport_connection_factor_score)) +
+geom_bar(position=position_dodge(), stat="identity", width=0.5) +
+geom_errorbar(aes(ymin=rapport_connection_factor_score-se, ymax=rapport_connection_factor_score+se),width=.2, position=position_dodge(.5)) +
+xlab("Condition") +
+ggtitle("Connection Factor in CCR Scale") +
+theme_bw()+   
+coord_cartesian(ylim = c(1, 5))
+    
+plot
+
+```
+<br>
+
+**Mean and Standard deviation:**
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+# mean & stdev for all conditions
+
+means <- aggregate(
+df$rapport_connection_factor_score,
+df["condition"],
+function(x) mean(x, na.rm = TRUE)
+)
+
+sds <- aggregate(
+df$rapport_connection_factor_score,
+df["condition"],
+function(x) sd(x, na.rm = TRUE)
+)
+
+new.matrix <- cbind(as.data.frame(means[2]), as.data.frame(sds[2]))
+colnames(new.matrix) <- c("Mean", "Standard Deviation")
+rownames(new.matrix) <- c("Responsive", "Unresponsive")
+
+kbl(new.matrix, digits = 3, align = c("l", "c", "c", "c")) %>% kable_classic() %>%
+kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+
+```
+
+##### independent-sample t-test
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+# Perform independent-sample t-test
+t_test_result <- t.test(rapport_connection_factor_score ~ condition, data = df, var.equal = TRUE)
+
+# View the results
+print(t_test_result)
+
+
+```
+
+##### calculate Cohen’s d and 95% CI for Cohen’s d
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+# Calculate Cohen's d
+cohen_d <- cohen.d(rapport_connection_factor_score ~ condition, data = df, hedges.correction = TRUE)
+print(cohen_d)
+
+```
+
+## Coordination Factor in CCR Scale
+
+#### Coordination Factor in CCR Scale {.tabset}
+
+##### Plot
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+
+summarySE <- summarySE(df, measurevar="rapport_coordination_factor_score", groupvars=c("condition"), na.rm = TRUE)
+plot <- ggplot(data=summarySE, aes(x=condition, y=rapport_coordination_factor_score)) +
+geom_bar(position=position_dodge(), stat="identity", width=0.5) +
+geom_errorbar(aes(ymin=rapport_coordination_factor_score-se, ymax=rapport_coordination_factor_score+se),width=.2, position=position_dodge(.5)) +
+xlab("Condition") +
+ggtitle("Coordination Factor in CCR Scale") +
+theme_bw()+   
+coord_cartesian(ylim = c(1, 5))
+    
+plot
+
+```
+<br>
+
+**Mean and Standard deviation:**
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+# mean & stdev for all conditions
+
+means <- aggregate(
+df$rapport_coordination_factor_score,
+df["condition"],
+function(x) mean(x, na.rm = TRUE)
+)
+
+sds <- aggregate(
+df$rapport_coordination_factor_score,
+df["condition"],
+function(x) sd(x, na.rm = TRUE)
+)
+
+new.matrix <- cbind(as.data.frame(means[2]), as.data.frame(sds[2]))
+colnames(new.matrix) <- c("Mean", "Standard Deviation")
+rownames(new.matrix) <- c("Responsive", "Unresponsive")
+
+kbl(new.matrix, digits = 3, align = c("l", "c", "c", "c")) %>% kable_classic() %>%
+kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+
+```
+
+##### independent-sample t-test
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+# Perform independent-sample t-test
+t_test_result <- t.test(rapport_coordination_factor_score ~ condition, data = df, var.equal = TRUE)
+
+# View the results
+print(t_test_result)
+
+
+```
+
+##### calculate Cohen’s d and 95% CI for Cohen’s d
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+# Calculate Cohen's d
+cohen_d <- cohen.d(rapport_coordination_factor_score ~ condition, data = df, hedges.correction = TRUE)
+print(cohen_d)
+
+```
+
+
+## Perceived Robot Responsiveness
+
+#### Perceived Robot Responsiveness {.tabset}
+
+##### Plot
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+df$perceived_robot_responsiveness <- 
+  (df$Q8_1+
+  df$Q8_2+
+  df$Q8_3+
+  df$Q8_4+
+  df$Q8_5+
+  df$Q8_6+
+  df$Q8_7+
+  df$Q8_8+
+  df$Q8_9)/9
+
+# Specify the columns to calculate Cronbach's alpha
+selected_columns <- df[, c("Q8_1", "Q8_2", "Q8_3","Q8_4", "Q8_5", "Q8_6", "Q8_7", "Q8_8", "Q8_9")]
+cronbach.alpha(selected_columns)
+
+summarySE <- summarySE(df, measurevar="perceived_robot_responsiveness", groupvars=c("condition"), na.rm = TRUE)
+plot <- ggplot(data=summarySE, aes(x=condition, y=perceived_robot_responsiveness)) +
+geom_bar(position=position_dodge(), stat="identity", width=0.5) +
+geom_errorbar(aes(ymin=perceived_robot_responsiveness-se, ymax=perceived_robot_responsiveness+se),width=.2, position=position_dodge(.5)) +
+xlab("Condition") +
+ggtitle("Perceived Robot Responsiveness") +
+theme_bw()+   
+coord_cartesian(ylim = c(1, 5))
+    
+plot
+
+```
+<br>
+
+**Mean and Standard deviation:**
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+# mean & stdev for all conditions
+
+means <- aggregate(
+df$perceived_robot_responsiveness,
+df["condition"],
+function(x) mean(x, na.rm = TRUE)
+)
+
+sds <- aggregate(
+df$perceived_robot_responsiveness,
+df["condition"],
+function(x) sd(x, na.rm = TRUE)
+)
+
+new.matrix <- cbind(as.data.frame(means[2]), as.data.frame(sds[2]))
+colnames(new.matrix) <- c("Mean", "Standard Deviation")
+rownames(new.matrix) <- c("Responsive", "Unresponsive")
+
+kbl(new.matrix, digits = 3, align = c("l", "c", "c", "c")) %>% kable_classic() %>%
+kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+
+```
+
+##### independent-sample t-test
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+# Perform independent-sample t-test
+t_test_result <- t.test(perceived_robot_responsiveness ~ condition, data = df, var.equal = TRUE)
+
+# View the results
+print(t_test_result)
+
+```
+
+##### calculate Cohen’s d and 95% CI for Cohen’s d
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+# Calculate Cohen's d
+cohen_d <- cohen.d(perceived_robot_responsiveness ~ condition, data = df, hedges.correction = TRUE)
+print(cohen_d)
+
+```
+
+## Perceived Robot Sociability
+
+#### Perceived Robot Sociability {.tabset}
+
+##### Plot
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+df$perceived_robot_sociability <- 
+  (df$Q217_1+
+  df$Q217_2+
+  df$Q217_3+
+  df$Q217_4)/4
+
+# Specify the columns to calculate Cronbach's alpha
+selected_columns <- df[, c("Q217_1", "Q217_2", "Q217_3","Q217_4")]
+cronbach.alpha(selected_columns)
+
+summarySE <- summarySE(df, measurevar="perceived_robot_sociability", groupvars=c("condition"), na.rm = TRUE)
+plot <- ggplot(data=summarySE, aes(x=condition, y=perceived_robot_sociability)) +
+geom_bar(position=position_dodge(), stat="identity", width=0.5) +
+geom_errorbar(aes(ymin=perceived_robot_sociability-se, ymax=perceived_robot_sociability+se),width=.2, position=position_dodge(.5)) +
+xlab("Condition") +
+ggtitle("Perceived Robot Sociability") +
+theme_bw()+
+coord_cartesian(ylim = c(1, 5))
+    
+plot
+
+```
+<br>
+
+**Mean and Standard deviation:**
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+# mean & stdev for all conditions
+
+means <- aggregate(
+df$perceived_robot_sociability,
+df["condition"],
+function(x) mean(x, na.rm = TRUE)
+)
+
+sds <- aggregate(
+df$perceived_robot_sociability,
+df["condition"],
+function(x) sd(x, na.rm = TRUE)
+)
+
+new.matrix <- cbind(as.data.frame(means[2]), as.data.frame(sds[2]))
+colnames(new.matrix) <- c("Mean", "Standard Deviation")
+rownames(new.matrix) <- c("Responsive", "Unresponsive")
+
+kbl(new.matrix, digits = 3, align = c("l", "c", "c", "c")) %>% kable_classic() %>%
+kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+
+```
+
+##### independent-sample t-test
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+# Perform independent-sample t-test
+t_test_result <- t.test(perceived_robot_sociability ~ condition, data = df, var.equal = TRUE)
+
+# View the results
+print(t_test_result)
+
+```
+
+##### calculate Cohen’s d and 95% CI for Cohen’s d
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+# Calculate Cohen's d
+cohen_d <- cohen.d(perceived_robot_sociability ~ condition, data = df, hedges.correction = TRUE)
+print(cohen_d)
+
+```
+
+## Perceived Robot Competence
+
+#### Perceived Robot Competence {.tabset}
+
+##### Plot
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+df$perceived_robot_competence <- 
+  (df$Q217_5+
+  df$Q217_6+
+  df$Q217_7+
+  df$Q217_8)/4
+
+# Specify the columns to calculate Cronbach's alpha
+selected_columns <- df[, c("Q217_5", "Q217_6", "Q217_7","Q217_8")]
+cronbach.alpha(selected_columns)
+
+summarySE <- summarySE(df, measurevar="perceived_robot_competence", groupvars=c("condition"), na.rm = TRUE)
+plot <- ggplot(data=summarySE, aes(x=condition, y=perceived_robot_competence)) +
+geom_bar(position=position_dodge(), stat="identity", width=0.5) +
+geom_errorbar(aes(ymin=perceived_robot_competence-se, ymax=perceived_robot_competence+se),width=.2, position=position_dodge(.5)) +
+xlab("Condition") +
+ggtitle("Perceived Robot Competence") +
+theme_bw()+
+coord_cartesian(ylim = c(1, 5))
+    
+plot
+
+```
+<br>
+
+**Mean and Standard deviation:**
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+# mean & stdev for all conditions
+
+means <- aggregate(
+df$perceived_robot_competence,
+df["condition"],
+function(x) mean(x, na.rm = TRUE)
+)
+
+sds <- aggregate(
+df$perceived_robot_competence,
+df["condition"],
+function(x) sd(x, na.rm = TRUE)
+)
+
+new.matrix <- cbind(as.data.frame(means[2]), as.data.frame(sds[2]))
+colnames(new.matrix) <- c("Mean", "Standard Deviation")
+rownames(new.matrix) <- c("Responsive", "Unresponsive")
+
+kbl(new.matrix, digits = 3, align = c("l", "c", "c", "c")) %>% kable_classic() %>%
+kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+
+```
+
+##### independent-sample t-test
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+# Perform independent-sample t-test
+t_test_result <- t.test(perceived_robot_competence ~ condition, data = df, var.equal = TRUE)
+
+# View the results
+print(t_test_result)
+
+```
+
+##### calculate Cohen’s d and 95% CI for Cohen’s d
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+# Calculate Cohen's d
+cohen_d <- cohen.d(perceived_robot_competence ~ condition, data = df, hedges.correction = TRUE)
+print(cohen_d)
+
+```
+
+
+## Perceived Robot Attractiveness
+
+#### Perceived Robot Attractiveness {.tabset}
+
+##### Plot
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+df$perceived_robot_attractiveness <- 
+  (df$Q218_1+
+  df$Q218_2+
+  df$Q218_3+
+  df$Q218_4+
+  df$Q218_5+
+  df$Q218_6)/6
+
+# Specify the columns to calculate Cronbach's alpha
+selected_columns <- df[, c("Q218_1", "Q218_2", "Q218_3","Q218_4", "Q218_5", "Q218_6")]
+cronbach.alpha(selected_columns)
+
+summarySE <- summarySE(df, measurevar="perceived_robot_attractiveness", groupvars=c("condition"), na.rm = TRUE)
+plot <- ggplot(data=summarySE, aes(x=condition, y=perceived_robot_attractiveness)) +
+geom_bar(position=position_dodge(), stat="identity", width=0.5) +
+geom_errorbar(aes(ymin=perceived_robot_attractiveness-se, ymax=perceived_robot_attractiveness+se),width=.2, position=position_dodge(.5)) +
+xlab("Condition") +
+ggtitle("Perceived Robot Attractiveness") +
+theme_bw()+
+coord_cartesian(ylim = c(1, 7))
+    
+plot
+
+```
+<br>
+
+**Mean and Standard deviation:**
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+# mean & stdev for all conditions
+
+means <- aggregate(
+df$perceived_robot_attractiveness,
+df["condition"],
+function(x) mean(x, na.rm = TRUE)
+)
+
+sds <- aggregate(
+df$perceived_robot_attractiveness,
+df["condition"],
+function(x) sd(x, na.rm = TRUE)
+)
+
+new.matrix <- cbind(as.data.frame(means[2]), as.data.frame(sds[2]))
+colnames(new.matrix) <- c("Mean", "Standard Deviation")
+rownames(new.matrix) <- c("Responsive", "Unresponsive")
+
+kbl(new.matrix, digits = 3, align = c("l", "c", "c", "c")) %>% kable_classic() %>%
+kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+
+```
+
+##### independent-sample t-test
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+# Perform independent-sample t-test
+t_test_result <- t.test(perceived_robot_attractiveness ~ condition, data = df, var.equal = TRUE)
+
+# View the results
+print(t_test_result)
+
+```
+
+##### calculate Cohen’s d and 95% CI for Cohen’s d
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+# Calculate Cohen's d
+cohen_d <- cohen.d(perceived_robot_attractiveness ~ condition, data = df, hedges.correction = TRUE)
+print(cohen_d)
+
+```
+
+
+## Participant's Desire for Robot Companionship
+
+#### Participant's Desire for Robot Companionship {.tabset}
+
+##### Plot
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+df$desire_for_robot_companionship <- 
+  (df$Q219_1+
+  df$Q219_2)/2
+
+# Specify the columns to calculate Cronbach's alpha
+selected_columns <- df[, c("Q219_1", "Q219_2")]
+cronbach.alpha(selected_columns)
+
+summarySE <- summarySE(df, measurevar="desire_for_robot_companionship", groupvars=c("condition"), na.rm = TRUE)
+plot <- ggplot(data=summarySE, aes(x=condition, y=desire_for_robot_companionship)) +
+geom_bar(position=position_dodge(), stat="identity", width=0.5) +
+geom_errorbar(aes(ymin=desire_for_robot_companionship-se, ymax=desire_for_robot_companionship+se),width=.2, position=position_dodge(.5)) +
+xlab("Condition") +
+ggtitle("Participant's Desire for Robot Companionship") +
+theme_bw()+
+coord_cartesian(ylim = c(1, 5))
+    
+plot
+
+```
+<br>
+
+**Mean and Standard deviation:**
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+# mean & stdev for all conditions
+
+means <- aggregate(
+df$desire_for_robot_companionship,
+df["condition"],
+function(x) mean(x, na.rm = TRUE)
+)
+
+sds <- aggregate(
+df$desire_for_robot_companionship,
+df["condition"],
+function(x) sd(x, na.rm = TRUE)
+)
+
+new.matrix <- cbind(as.data.frame(means[2]), as.data.frame(sds[2]))
+colnames(new.matrix) <- c("Mean", "Standard Deviation")
+rownames(new.matrix) <- c("Responsive", "Unresponsive")
+
+kbl(new.matrix, digits = 3, align = c("l", "c", "c", "c")) %>% kable_classic() %>%
+kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+
+```
+
+##### independent-sample t-test
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+# Perform independent-sample t-test
+t_test_result <- t.test(desire_for_robot_companionship ~ condition, data = df, var.equal = TRUE)
+
+# View the results
+print(t_test_result)
+
+```
+
+##### calculate Cohen’s d and 95% CI for Cohen’s d
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+# Calculate Cohen's d
+cohen_d <- cohen.d(desire_for_robot_companionship ~ condition, data = df, hedges.correction = TRUE)
+print(cohen_d)
+
+```
+
+
+## Participant's Approach Behaviors
+
+#### Participant's Approach Behaviors {.tabset}
+
+##### Plot
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+df_coding$behavioral <- (df_coding$behavioral_coder_2+df_coding$behavioral_coder_3)/2
+
+summarySE <- summarySE(df_coding, measurevar="behavioral", groupvars=c("condition"), na.rm = TRUE)
+plot <- ggplot(data=summarySE, aes(x=condition, y=behavioral)) +
+geom_bar(position=position_dodge(), stat="identity", width=0.5) +
+geom_errorbar(aes(ymin=behavioral-se, ymax=behavioral+se),width=.2, position=position_dodge(.5)) +
+xlab("Condition") +
+ggtitle("Participant's Approach Behaviors") +
+theme_bw()+
+coord_cartesian(ylim = c(1, 5))
+    
+plot
+
+```
+<br>
+
+**Mean and Standard deviation:**
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+# mean & stdev for all conditions
+
+means <- aggregate(
+df_coding$behavioral,
+df_coding["condition"],
+function(x) mean(x, na.rm = TRUE)
+)
+
+sds <- aggregate(
+df_coding$behavioral,
+df_coding["condition"],
+function(x) sd(x, na.rm = TRUE)
+)
+
+new.matrix <- cbind(as.data.frame(means[2]), as.data.frame(sds[2]))
+colnames(new.matrix) <- c("Mean", "Standard Deviation")
+rownames(new.matrix) <- c("Responsive", "Unresponsive")
+
+kbl(new.matrix, digits = 3, align = c("l", "c", "c", "c")) %>% kable_classic() %>%
+kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+
+```
+
+##### independent-sample t-test
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+# Perform independent-sample t-test
+t_test_result <- t.test(behavioral ~ condition, data = df_coding, var.equal = TRUE)
+
+# View the results
+print(t_test_result)
+
+```
+
+##### calculate Cohen’s d and 95% CI for Cohen’s d
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+# Calculate Cohen's d
+cohen_d <- cohen.d(behavioral ~ condition, data = df_coding, hedges.correction = TRUE)
+print(cohen_d)
+
+```
+
+## Participant's Self-disclosure
+
+#### Participant's Self-disclosure {.tabset}
+
+##### Plot
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+df_coding$disclosure <- (df_coding$disclosure_coder_2+df_coding$disclosure_coder_3)/2
+
+summarySE <- summarySE(df_coding, measurevar="disclosure", groupvars=c("condition"), na.rm = TRUE)
+plot <- ggplot(data=summarySE, aes(x=condition, y=disclosure)) +
+geom_bar(position=position_dodge(), stat="identity", width=0.5) +
+geom_errorbar(aes(ymin=disclosure-se, ymax=disclosure+se),width=.2, position=position_dodge(.5)) +
+xlab("Condition") +
+ggtitle("Participant's Self-disclosure") +
+theme_bw()+
+coord_cartesian(ylim = c(1, 5))
+    
+plot
+
+```
+<br>
+
+**Mean and Standard deviation:**
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+# mean & stdev for all conditions
+
+means <- aggregate(
+df_coding$disclosure,
+df_coding["condition"],
+function(x) mean(x, na.rm = TRUE)
+)
+
+sds <- aggregate(
+df_coding$disclosure,
+df_coding["condition"],
+function(x) sd(x, na.rm = TRUE)
+)
+
+new.matrix <- cbind(as.data.frame(means[2]), as.data.frame(sds[2]))
+colnames(new.matrix) <- c("Mean", "Standard Deviation")
+rownames(new.matrix) <- c("Responsive", "Unresponsive")
+
+kbl(new.matrix, digits = 3, align = c("l", "c", "c", "c")) %>% kable_classic() %>%
+kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+
+```
+
+##### independent-sample t-test
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+# Perform independent-sample t-test
+t_test_result <- t.test(disclosure ~ condition, data = df_coding, var.equal = TRUE)
+
+# View the results
+print(t_test_result)
+
+```
+
+##### calculate Cohen’s d and 95% CI for Cohen’s d
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+# Calculate Cohen's d
+cohen_d <- cohen.d(disclosure ~ condition, data = df_coding, hedges.correction = TRUE)
+print(cohen_d)
+
+```
+
+## Krippendorff’s Alpha for Participant’s Approach Behaviors and Participant’s Self-disclosure
+
+#### Krippendorff’s Alpha {.tabset}
+
+##### Video Coding
+
+```{r, echo=FALSE, message= FALSE, warning= FALSE}
+
+coded_data <-
+  tribble(
+    ~content_id, ~coder_id, ~behavior, ~disclosure,   
+    4,           "Coder 1",       3,         5,
+    5,           "Coder 1",       1,         2,  
+    8,           "Coder 1",       3,         5,  
+    12,          "Coder 1",       3,         5,  
+    16,          "Coder 1",       4,         3,  
+    4,           "Coder 2",       3,         5,  
+    5,           "Coder 2",       1,         2,  
+    8,           "Coder 2",       2,         5,  
+    12,          "Coder 2",       3,         4,  
+    16,          "Coder 2",       4,         3,  
+    4,           "Coder 3",       3,         5,  
+    5,           "Coder 3",       1,         2,  
+    8,           "Coder 3",       3,         5,  
+    12,          "Coder 3",       4,         4,  
+    16,          "Coder 3",       4,         4,  
+  )
+
+print("Krippendorff’s Alpha For Participant’s Approach Behaviors")
+behavior_data <- dplyr::select(coded_data, content_id, coder_id, behavior)
+behavior_data <- pivot_wider(behavior_data, id_cols = coder_id, names_from = content_id, values_from = behavior)
+behavior_data <- dplyr::select(behavior_data, -coder_id)
+behavior_data <- as.matrix(behavior_data)
+kripp.alpha(behavior_data, method = "interval")
+
+print("Krippendorff’s Alpha For Participant’s Self-disclosure")
+disclosure_data <- dplyr::select(coded_data, content_id, coder_id, disclosure)
+disclosure_data <- pivot_wider(disclosure_data, id_cols = coder_id, names_from = content_id, values_from = disclosure)
+disclosure_data <- dplyr::select(disclosure_data, -coder_id)
+disclosure_data <- as.matrix(disclosure_data)
+kripp.alpha(disclosure_data, method = "interval")
+
+```
+
+
