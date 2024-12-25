@@ -28,6 +28,7 @@
 ## Study 3
 
 * CorrelationCoefficient.R
+* study3.Rmd
 
 # CCR Scale Study 3
 
