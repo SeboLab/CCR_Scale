@@ -1,4 +1,4 @@
-# CCR Scale Data analysis
+# CCR Scale Study 1-3 Data Analysis
 
 ## Study 1
 
@@ -30,7 +30,7 @@
 * CorrelationCoefficient.R
 * study3.Rmd
 
-# CCR Scale Study 3
+# CCR Scale Study 3 Robot Code
 
 If you have not previously used ROS2 and Misty, or do not have the necessary Python packages, see the prerequisites for software installation instructions.
 
