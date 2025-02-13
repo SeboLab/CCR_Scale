@@ -3,53 +3,53 @@
 ## Study 1
 
 * nFactors.R
-  * Purpose: Finds the number of factors
-  * Input data: `Study1Data.csv`, 288 participant's ratings of 27 scale items on one of the four videos (Exercise, Service, Companion, Argument), which can be accessed through this link https://osf.io/5ezga/?view_only=f857949cfe1e49dd8f75ce1aac206b9f
-  * Result Interpretation: Very Simple Structure (especially, VSS complexity 2 = 0.99) and Empirical BIC suggested 2 factors
+  * Purpose: Determines the number of factors.
+  * Input Data: `Study1Data.csv`, containing ratings from 288 participants on 27 scale items, each responding to one of four videos (Exercise, Service, Companion, Argument). The videos can be accessed [here](https://osf.io/5ezga/?view_only=f857949cfe1e49dd8f75ce1aac206b9f).
+  * Result Interpretation: Very Simple Structure (VSS), particularly VSS complexity 2 = 0.99, and empirical BIC suggested two factors. 
 * parallelAnalysis.R
-  * Purpose: Finds the number of factors
+  * Purpose: Determines the number of factors
   * Input data: `Study1Data.csv`
-  * Result Interpretation: Kaiser's Rule on the Unadjusted Eigenvalues (keep factors with eigenvalues > 1) suggested 2 factors
+  * Result Interpretation: Kaiser's Rule, applied to the unadjusted eigenvalues (retaining factors with eigenvalues > 1), suggested two factors.
 * factorAnalysis.R
-  * Purpose: Runs exploratory factor analysis with 2 factors using promax rotationand and see factor loadings
+  * Purpose: Performs exploratory factor analysis with two factors using Promax rotation to examine factor loadings.
   * Input data: `Study1Data.csv`
-  * Result Interpretation: By keeping scale items with one loading >= 0.6 with no cross-loadings >= 0.3, we see 19 items across both factors. We named the two factors using scale items' contextual meanings: Connection and Coordination.
+  * Result Interpretation: Retaining scale items with at least one loading >= 0.6 and no cross-loadings >= 0.3 resulted in 19 items across both factors. The factors were named Connection and Coordination based on the contextual meanings of the scale items.
 * cronbachAlpha.R
-  * Purpose: Examines the remaining 19 scale items' internal reliability using Cronbach's alpha
+  * Purpose: Assesses the internal reliability of the remaining 19 scale items using Cronbach's alpha.
   * Input data: `Study1Data.csv`
-  * Result Interpretation: alpha = 0.96, which is very high for internal reliability  
+  * Result Interpretation: Cronbach's alpha = 0.96, indicating very high internal reliability.
 * omega.R
-  * Purpose: Examines the remaining 19 scale items' internal reliability using McDonald's omega
+  * Purpose: Evaluates the internal reliability of the remaining 19 scale items using McDonald's omega.
   * Input data: `Study1Data.csv`
-  * Result Interpretation: omega = 0.97, which is very high for internal reliability 
+  * Result Interpretation: McDonald's omega = 0.97, indicating very high internal reliability.
 
 ## Study 2
 
 * CFA.R
-  * Purpose: Runs confirmatory factor analysis with 18 items excluding deep conversation. If you are running it with different items in the factors, change the section called 'model'. You will need to change the headings of the columns in the data you import to match the names used in the lists of items (they cannot have spaces).
-  * Input data: `Study2Data.csv` 201 participant's ratings of 19 scale items on all four videos (Healthcare, Hold Hands, Pet, Conversation), which can be accessed through this link https://osf.io/5ezga/?view_only=f857949cfe1e49dd8f75ce1aac206b9f
-  * Result Interpretation: CCR scale has a good fit based on Comparative Fit Index (CFI), Tucker-Lewis Index (TLI), and Standardized Root Mean Square Residual (SRMR): CFI = 0.997 (>= 0.95), TLI = 0.996 (>= 0.95), and SRMR = 0.046 (<= 0.08). Meanwhile, the Root Mean Square Error of Approximation (RMSEA) only indicates a moderate fit: RMSEA = 0.096 (<= 0.08).
-* CorrelationCoefficient.R
-  * Purpose: Compare correlation between 18-item CCR Scale and Gratch Rapport Scale
-  * Input data: `Study2DataForOrdinalRegression.csv`, 5 columns data: Video (Healthcare, Hold Hands, Pet, Conversation), Ranking (rapport ranking from 1 lowest to 4 highest), Gratch (Gratch Rapport Scale score), CCR	(CCR Scale score), Subject (participant id from 1 to 201)
-  * Result Interpretation: Correlation Coefficient = 0.84, which is high
-* ordinalRegression.R
-  * Purpose: Calculate model fit using AIC for the ordinal regression of CCR scale and the ordinal regression of Gratch Rapport Scale
-  * Input data: `Study2DataForOrdinalRegression.csv`
-  * Result Interpretation: CCR scale AIC is 1874.23 and Gratch Rapport Scale AIC is 1914.33. Lower AIC means better model fit. Note that if a model is more than 2 units of AIC lower than another model, it is considered a significantly better model.
-* NagelkerkeRsquared.R
-  * Purpose: Calculate Nagelkerke R squared for the ordinal regression of CCR scale and the ordinal regression of Gratch Rapport Scale
-  * Input data: `Study2DataForOrdinalRegression.csv`
-  * Result Interpretation: CCR scale Nagelkerke R squared is 0.39 and Gratch Rapport Scale Nagelkerke R squared is 0.35
-* cronbachAlpha.R
-  * Purpose: Examines 18-item CCR Scale and Gratch Rapport Scale internal reliability and using Cronbach's alpha
-  * Input data: `Study2Data.csv` and `Study2GratchAlreadyReversed.csv`, which we have reverse-coded the necessary items
-  * Result Interpretation: CCR scale alpha = 0.97 and Gratch Rapport Scale alpha = 0.89
-* omega.R
-  * Purpose: Examines 18-item CCR Scale and Gratch Rapport Scale internal reliability and using McDonald's omega
-  * Input data: `Study2Data.csv` and `Study2GratchAlreadyReversed.csv`
-  * Result Interpretation: CCR scale omega = 0.97 and Gratch Rapport Scale omega = 0.94
+  * Purpose: Performs confirmatory factor analysis with 18 items, excluding "Deep Conversation."
+  * Input data: `Study2Data.csv`, containing ratings from 201 participants on 19 scale items across all four videos (Healthcare, Hold Hands, Pet, Conversation). The videos can be accessed [here](https://osf.io/5ezga/?view_only=f857949cfe1e49dd8f75ce1aac206b9f).
+  * Result Interpretation: The CCR scale demonstrates good fit based on the Comparative Fit Index (CFI), Tucker-Lewis Index (TLI), and Standardized Root Mean Square Residual (SRMR): CFI = 0.997 (>= 0.95), TLI = 0.996 (>= 0.95), and SRMR = 0.046 (<= 0.08). However, the Root Mean Square Error of Approximation (RMSEA) indicates only a moderate fit: RMSEA = 0.096 (<= 0.08).
 
+* CorrelationCoefficient.R
+  * Purpose: Compare the correlation between the 18-item CCR Scale and the Gratch Rapport Scale.
+  * Input data: `Study2DataForOrdinalRegression.csv`, containing five columns: Video (Healthcare, Hold Hands, Pet, Conversation), Ranking (rapport ranking from 1 = lowest to 4 = highest), Gratch (Gratch Rapport Scale score), CCR (CCR Scale score), and Subject (participant ID from 1 to 201).
+  * Result Interpretation: The correlation coefficient is 0.84, indicating a strong positive correlation.
+* ordinalRegression.R
+  * Purpose: Evaluate model fit using AIC for the ordinal regression of the CCR Scale and the Gratch Rapport Scale.
+  * Input data: `Study2DataForOrdinalRegression.csv`
+  * Result Interpretation: The AIC for the CCR Scale model is 1874.23, while the AIC for the Gratch Rapport Scale model is 1914.33. CCR Scale model is a better model because it is more than 2 units lower than Gratch Rapport Scale model.
+* NagelkerkeRsquared.R
+  * Purpose: Compute Nagelkerke R-squared for the ordinal regression of the CCR Scale and the Gratch Rapport Scale.
+  * Input data: `Study2DataForOrdinalRegression.csv`
+  * Result Interpretation: The Nagelkerke R-squared value is 0.39 for the CCR Scale and 0.35 for the Gratch Rapport Scale. A higher Nagelkerke R-squared value indicates a better model fit.
+* cronbachAlpha.R
+  * Purpose: Assess the internal reliability of the 18-item CCR Scale and the Gratch Rapport Scale using Cronbach's alpha.
+  * Input data: `Study2Data.csv` and `Study2GratchAlreadyReversed.csv`, where we have already reverse-coded the items that need to be reverse-coded.
+  * Result Interpretation: The Cronbach's alpha for the CCR Scale is 0.97, and the Cronbach's alpha for the Gratch Rapport Scale is 0.89.
+* omega.R
+  * Purpose: Assess the internal reliability of the 18-item CCR Scale and the Gratch Rapport Scale using McDonald's omega.
+  * Input data: `Study2Data.csv` and `Study2GratchAlreadyReversed.csv`
+  * Result Interpretation: McDonald's omega for the CCR Scale is 0.97, and McDonald's omega for the Gratch Rapport Scale is 0.94.
 
 ## Study 3
 
