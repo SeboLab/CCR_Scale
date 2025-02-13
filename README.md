@@ -3,14 +3,25 @@
 ## Study 1
 
 * nFactors.R
-  * Finds the number of factors
+  * Purpose: Finds the number of factors
+  * Input data: `Study1Data.csv`, 288 participant's ratings of 27 scale items on one of the four videos (Exercise, Service, Companion, Argument), which can be accessed through this link https://osf.io/5ezga/?view_only=f857949cfe1e49dd8f75ce1aac206b9f
+  * Result Interpretation: Very Simple Structure (especially, VSS complexity 2 = 0.99) and Empirical BIC suggested 2 factors
 * parallelAnalysis.R
-  * Finds the number of factors
+  * Purpose: Finds the number of factors
+  * Input data: `Study1Data.csv`
+  * Result Interpretation: Kaiser's Rule on the Unadjusted Eigenvalues (keep factors with eigenvalues > 1) suggested 2 factors
 * factorAnalysis.R
-  * Runs exploratory factor analysis using the specified number of factors
+  * Purpose: Runs exploratory factor analysis with 2 factors using promax rotationand and see factor loadings
+  * Input data: `Study1Data.csv`
+  * Result Interpretation: By keeping scale items with one loading >= 0.6 with no cross-loadings >= 0.3, we see 19 items across both factors. We named the two factors using scale items' contextual meanings: Connection and Coordination.
 * cronbachAlpha.R
+  * Purpose: Examines the  remaining 19 scale items' internal reliability using Cronbach's alpha
+  * Input data: `Study1Data.csv`
+  * Result Interpretation: alpha = 0.96, which is very high for internal reliability  
 * omega.R
-  * Calculates McDonald's omega
+  * Purpose: Examines the remaining 19 scale items' internal reliability using McDonald's omega
+  * Input data: `Study1Data.csv`
+  * Result Interpretation: omega = 0.97, which is very high for internal reliability 
 
 ## Study 2
 
