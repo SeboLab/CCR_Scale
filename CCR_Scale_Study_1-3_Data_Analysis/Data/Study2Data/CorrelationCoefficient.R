@@ -1,7 +1,7 @@
 # Comparing CCR Scale to Gratch study (study 2)
 
-# Put file path to ordinalRegression_Study2_excludingDeepConversation.csv below
-df <- read.csv("~/CCR_Scale/Data_Analysis/Data/Study2Data/ordinalRegression_Study2_excludingDeepConversation.csv")
+# Put file path to Study2DataForOrdinalRegression.csv below
+df <- read.csv("/Users/timmylin/Desktop/CCR_Scale/CCR_Scale_Study_1-3_Data_Analysis/Study_2/Study2DataForOrdinalRegression.csv")
 
 Gratch <- df$Gratch
 CCR <- df$CCR
