@@ -1,7 +1,7 @@
 ---
 title: "Study 3 Data Analysis"
 author: ""
-date: "Updated 12/24/2024"
+date: "Updated 02/13/2024"
 output:
   html_document:
     number_sections: no
@@ -56,8 +56,8 @@ library(showtext)
 library(ltm)
 library(ggpattern)
 
-#Put file path to Study3_data.csv below:
-df <- read.csv("~/CCR_Scale/Data_Analysis/Data/Study3_data.csv", header=T)
+#Put file path to Study3Data.csv below:
+df <- read.csv("~/CCR_Scale/CCR_Scale_Study_1-3_Data_Analysis/Study_3/Study3Data.csv", header=T)
 
 #Create a factor for attitude
 df$condition <- factor(
@@ -66,8 +66,8 @@ df$condition <- factor(
   labels = c("Responsive", "Unresponsive")
 )
 
-#Put file path to Study3_qualitative_data.csv below:
-df_coding <- read.csv("~/CCR_Scale/Data_Analysis/Data/Study3_qualitative_data.csv", header=T)
+#Put file path to Study3QualitativeData.csv below:
+df_coding <- read.csv("~/CCR_Scale/CCR_Scale_Study_1-3_Data_Analysis/Study_3/Study3QualitativeData.csv", header=T)
 
 #Create a factor for attitude
 df_coding$condition <- factor(

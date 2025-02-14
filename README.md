@@ -7,20 +7,20 @@
   * Input Data: `Study1Data.csv`, containing ratings from 288 participants on 27 scale items, each responding to one of four videos (Exercise, Service, Companion, Argument). The videos can be accessed [here](https://osf.io/5ezga/?view_only=f857949cfe1e49dd8f75ce1aac206b9f).
   * Result Interpretation: Very Simple Structure (VSS), particularly VSS complexity 2 = 0.99, and empirical BIC suggested two factors. 
 * parallelAnalysis.R
-  * Purpose: Determines the number of factors
-  * Input data: `Study1Data.csv`
+  * Purpose: Determines the number of factors.
+  * Input data: `Study1Data.csv`.
   * Result Interpretation: Kaiser's Rule, applied to the unadjusted eigenvalues (retaining factors with eigenvalues > 1), suggested two factors.
 * factorAnalysis.R
   * Purpose: Performs exploratory factor analysis with two factors using Promax rotation to examine factor loadings.
-  * Input data: `Study1Data.csv`
+  * Input data: `Study1Data.csv`.
   * Result Interpretation: Retaining scale items with at least one loading >= 0.6 and no cross-loadings >= 0.3 resulted in 19 items across both factors. The factors were named Connection and Coordination based on the contextual meanings of the scale items.
 * cronbachAlpha.R
   * Purpose: Assesses the internal reliability of the remaining 19 scale items using Cronbach's alpha.
-  * Input data: `Study1Data.csv`
+  * Input data: `Study1Data.csv`.
   * Result Interpretation: Cronbach's alpha = 0.96, indicating very high internal reliability.
 * omega.R
   * Purpose: Evaluates the internal reliability of the remaining 19 scale items using McDonald's omega.
-  * Input data: `Study1Data.csv`
+  * Input data: `Study1Data.csv`.
   * Result Interpretation: McDonald's omega = 0.97, indicating very high internal reliability.
 
 ## Study 2
@@ -36,11 +36,11 @@
   * Result Interpretation: The correlation coefficient is 0.84, indicating a strong positive correlation.
 * ordinalRegression.R
   * Purpose: Evaluate model fit using AIC for the ordinal regression of the CCR Scale and the Gratch Rapport Scale.
-  * Input data: `Study2DataForOrdinalRegression.csv`
+  * Input data: `Study2DataForOrdinalRegression.csv`.
   * Result Interpretation: The AIC for the CCR Scale model is 1874.23, while the AIC for the Gratch Rapport Scale model is 1914.33. CCR Scale model is a better model because it is more than 2 units lower than Gratch Rapport Scale model.
 * NagelkerkeRsquared.R
   * Purpose: Compute Nagelkerke R-squared for the ordinal regression of the CCR Scale and the Gratch Rapport Scale.
-  * Input data: `Study2DataForOrdinalRegression.csv`
+  * Input data: `Study2DataForOrdinalRegression.csv`.
   * Result Interpretation: The Nagelkerke R-squared value is 0.39 for the CCR Scale and 0.35 for the Gratch Rapport Scale. A higher Nagelkerke R-squared value indicates a better model fit.
 * cronbachAlpha.R
   * Purpose: Assess the internal reliability of the 18-item CCR Scale and the Gratch Rapport Scale using Cronbach's alpha.
@@ -48,13 +48,27 @@
   * Result Interpretation: The Cronbach's alpha for the CCR Scale is 0.97, and the Cronbach's alpha for the Gratch Rapport Scale is 0.89.
 * omega.R
   * Purpose: Assess the internal reliability of the 18-item CCR Scale and the Gratch Rapport Scale using McDonald's omega.
-  * Input data: `Study2Data.csv` and `Study2GratchAlreadyReversed.csv`
+  * Input data: `Study2Data.csv` and `Study2GratchAlreadyReversed.csv`.
   * Result Interpretation: McDonald's omega for the CCR Scale is 0.97, and McDonald's omega for the Gratch Rapport Scale is 0.94.
 
 ## Study 3
 
 * CorrelationCoefficient.R
+  * Purpose: Compare the correlation between the 18-item CCR Scale and Perceived Robot Responsiveness ratings.
+  * Input data: `Study3_CorrelationCoefficient.csv`, containing three columns: rapportscore (CCR Scale score from 44 participants), condition (0 = Unresponsive Condition, 1 = Responsive Condition), perceived_robot_responsiveness (ratings from 44 participants).
+  * Result Interpretation: The correlation coefficient is 0.83, indicating a strong positive correlation. In the paper, we made a small mistake by marking it as 0.75.
+* cronbachAlpha.R
+  * Purpose: Assess the internal reliability of the 18-item CCR Scale using Cronbach's alpha.
+  * Input data: `Study3Data.csv`.
+  * Result Interpretation: The Cronbach's alpha for the CCR Scale is 0.95.
+* omega.R
+  * Purpose: Assess the internal reliability of the 18-item CCR Scale using McDonald's omega.
+  * Input data: `Study3Data.csv`.
+  * Result Interpretation: McDonald's omega for the CCR Scale is 0.96.
 * study3.Rmd
+  * Purpose: Analyze the data (e.g., CCR Scale ratings) across the two conditions. Click on the knit function to generate a html file summarizing the results.
+  * Input data: `Study3Data.csv` containing data collected during Study 3, and `Study3QualitativeData.csv` containing qualitative coding of participants' interactions.
+  * Result Interpretation: Refer to Table III in the paper for the statistical results.
 
 # CCR Scale Study 3 Robot Code
 
