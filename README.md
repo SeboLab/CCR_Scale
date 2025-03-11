@@ -203,3 +203,22 @@ You can find the app in the app store and install it on your Mac computer.
 Clone this repository into the src folder of ros2_ws in the virtual machine.
 
 Locate the Rapport/rapport/other_devices folder in the github and put the socketServer.py file on the personal laptop mac and the socketClient.py and display.py files on the slides laptop. 
+
+## Bibtex Citation
+
+```bibtex
+@inproceedings{10.5555/3721488.3721594,
+author = {Lin, Ting-Han and Dinner, Hannah and Leung, Tsz Long and Mutlu, Bilge and Trafton, J. Gregory and Sebo, Sarah},
+title = {Connection-Coordination Rapport (CCR) Scale: A Dual-Factor Scale to Measure Human-Robot Rapport},
+year = {2025},
+publisher = {IEEE Press},
+abstract = {Robots, particularly in service and companionship roles, must develop positive relationships with people they interact with regularly to be successful. These positive human-robot relationships can be characterized as establishing ''rapport,'' which indicates mutual understanding and interpersonal connection that form the groundwork for successful long-term human-robot interaction. However, the human-robot interaction research literature lacks scale instruments to assess human-robot rapport in a variety of situations. In this work, we developed the 18-item Connection-Coordination Rapport (CCR) Scale to measure human-robot rapport. We first ran Study 1 (N = 288) where online participants rated videos of human-robot interactions using a set of candidate items. Our Study 1 results showed the discovery of two factors in our scale, which we named ''Connection'' and ''Coordination.'' We then evaluated this scale by running Study 2 (N = 201) where online participants rated a new set of human-robot interaction videos with our scale and an existing rapport scale from virtual agents research for comparison. We also validated our scale by replicating a prior in-person human-robot interaction study, Study 3 (N = 44), and found that rapport is rated significantly greater when participants interacted with a responsive robot (responsive condition) as opposed to an unresponsive robot (unresponsive condition). Results from these studies demonstrate high reliability and validity for the CCR scale, which can be used to measure rapport in both first-person and third-person perspectives. We encourage the adoption of this scale in future studies to measure rapport in a variety of human-robot interactions.},
+booktitle = {Proceedings of the 2025 ACM/IEEE International Conference on Human-Robot Interaction},
+pages = {869–879},
+numpages = {11},
+keywords = {human-robot interaction, human-robot rapport, rapport, scale development},
+location = {Melbourne, Australia},
+series = {HRI '25}
+}
+
+```
